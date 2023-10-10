@@ -11,13 +11,13 @@ parser.add_argument('-k', '--keep', nargs='+', default=[], help='columns to keep
 parser.add_argument('-r', '--rename', nargs='+', default=[], help='new column names')
 args = parser.parse_args()
 
-path = args.input
+path = args.input_path
 all_files = glob.glob(path + "/*.csv")
 
 li = []
 
 for filename in all_files:
-  df = pd.read_csv(filename)
+  df = pd.read_csv(filename, dtype=str)
   
   # Select only specified columns
   if args.keep:
@@ -35,4 +35,4 @@ df = pd.concat(li, ignore_index=True)
 # Save combined dataframe to csv
 df.to_csv(os.path.join(args.output_path, args.name), index=False)
 
-print(f"Created {args.name} in {args.output} with {len(df)} rows.")
+print(f"Created {args.name} in {args.output_path} with {len(df)} rows.")
